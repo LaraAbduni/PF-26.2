@@ -2,6 +2,8 @@
 
 Este guia acompanha os dois projetos: `PF-26.2` (API) e `PF-front-26.2` (site). A estrutura vem do Crescit, mas você vai criar seu próprio Auth0 e seu próprio projeto Vercel.
 
+**Execução atual: local.** Para iniciar o sistema no computador, use `pf/iniciar.ps1` e consulte `pf/LEIA-PRIMEIRO.md`. Este guia fica como referência opcional de deploy. Push e pull request executam testes; publicação na AWS somente pelo acionamento manual do workflow.
+
 Se o Actions parou com **Configure DATABASE_PASSWORD**, a checagem encontrou esse secret vazio ou ausente. No repositório **do back**, abra Settings → Secrets and variables → Actions → **Secrets** → New repository secret. Crie `DATABASE_PASSWORD` com uma senha nova que você escolher para o banco da PF. Não é a senha da AWS nem do Auth0.
 
 O workflow lê `HOST_TEST`, `KEY_TEST`, `DOCKERHUB_TOKEN` e `DATABASE_PASSWORD` da aba **Secrets**. Cadastrar esses nomes somente em **Variables** não os disponibiliza como secrets. Caso tenha colocado a chave e o token em Variables, salve-os nos secrets correspondentes e remova as cópias de Variables. Já `AUTH0_ISSUER`, `AUTH0_AUDIENCE`, `AUTH0_CLAIM_NAMESPACE`, `FRONTEND_URL` e `DOCKERHUB_USERNAME` pertencem à aba **Variables**, conforme o passo 6.
@@ -156,7 +158,7 @@ git commit -m "Implementa sistema de avaliacoes da PF"
 git push origin main
 ```
 
-Execute uma vez na pasta do back e outra na pasta do front. `.env`, chaves e senhas estão ignorados. O push na main do back dispara testes e deploy; se os secrets ainda não estiverem configurados, a etapa de deploy vai informar o nome que falta. Configure o passo 6 antes do push se quiser que ele já publique na primeira tentativa.
+Execute uma vez na pasta do back e outra na pasta do front. `.env`, chaves e senhas estão ignorados. O push na main do back dispara testes. Para publicar na AWS, configure o passo 6 e acione o workflow manualmente.
 
 ## 5. Conhecer a sua AWS antes de publicar
 
@@ -215,7 +217,7 @@ O Docker usa `DATABASE_PASSWORD` só para inicializar o banco no primeiro deploy
 
 ### Executar e entender o deploy
 
-Faça push na main ou abra **Actions → Testar e publicar API de avaliações → Run workflow → main**.
+Para publicar, abra **Actions → Testar e publicar API de avaliações → Run workflow → main**. Push na main executa somente os testes.
 
 1. **test:** executa `mvn verify`; compila e roda os testes.
 2. **deploy:** confere a configuração e entra no Docker Hub.

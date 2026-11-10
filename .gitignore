@@ -8,3 +8,4 @@
 *.iml
 .vscode/
 *.log
+/data/
