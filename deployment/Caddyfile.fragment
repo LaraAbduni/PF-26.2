@@ -1,0 +1,6 @@
+# Acrescente este bloco ao Caddyfile EXISTENTE do Crescit.
+# Preserve as outras rotas e o bloco global (https_port 8081).
+# Caminho encontrado no Crescit: /home/ubuntu/crescit-runtime/caddy/Caddyfile
+avaliacoes.100-53-222-83.sslip.io:8081 {
+    reverse_proxy pf-avaliacoes-api:8080
+}
