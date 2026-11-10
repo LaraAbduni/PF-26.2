@@ -2,6 +2,12 @@
 
 Este guia acompanha os dois projetos: `PF-26.2` (API) e `PF-front-26.2` (site). A estrutura vem do Crescit, mas você vai criar seu próprio Auth0 e seu próprio projeto Vercel.
 
+Se o Actions parou com **Configure DATABASE_PASSWORD**, a checagem encontrou esse secret vazio ou ausente. No repositório **do back**, abra Settings → Secrets and variables → Actions → **Secrets** → New repository secret. Crie `DATABASE_PASSWORD` com uma senha nova que você escolher para o banco da PF. Não é a senha da AWS nem do Auth0.
+
+O workflow lê `HOST_TEST`, `KEY_TEST`, `DOCKERHUB_TOKEN` e `DATABASE_PASSWORD` da aba **Secrets**. Cadastrar esses nomes somente em **Variables** não os disponibiliza como secrets. Caso tenha colocado a chave e o token em Variables, salve-os nos secrets correspondentes e remova as cópias de Variables. Já `AUTH0_ISSUER`, `AUTH0_AUDIENCE`, `AUTH0_CLAIM_NAMESPACE`, `FRONTEND_URL` e `DOCKERHUB_USERNAME` pertencem à aba **Variables**, conforme o passo 6.
+
+Na tela da Vercel que oferece **Optional Integrations → Auth0 → Add**, essa integração é opcional: este projeto usa o SDK React e cinco variáveis `VITE_` cadastradas manualmente. Pode fazer o primeiro Deploy para descobrir sua URL de produção; a tela de configuração incompleta é esperada enquanto as variáveis ainda não estiverem preenchidas. Depois siga os passos de Auth0 e faça um novo deploy com os dados corretos.
+
 ## 1. O que foi reaproveitado do Crescit
 
 | Configuração | Valor preparado |
@@ -51,6 +57,8 @@ Salve. Se usar login com e-mail/senha, confira em **Connections** da aplicação
 3. **Identifier:** `https://api.pf-avaliacoes`.
 4. Algoritmo: **RS256**.
 5. Na API, abra **Settings → RBAC Settings** e ative **Enable RBAC**. Salve.
+
+Se aparecer **JWT Profile**, mantenha **Auth0**. Se a política **User-Delegated Access** estiver em **Per-app authorization** / exigir client grant, abra a aba **Application Access**, encontre `PF Avaliações Front` e conceda **User-Delegated Access** para essa aplicação. Se a política estiver no padrão **All apps allowed**, não é necessário um grant individual para a SPA do próprio tenant. O frontend continua sendo a aplicação Single Page Web Application criada no passo anterior.
 
 O Identifier é a **audience**. Ele identifica a API no token; não precisa ser uma URL que abre no navegador e não é o endereço da sua AWS. Use exatamente o mesmo valor no front e no back. A aplicação envia essa audience ao pedir o access token.
 
@@ -343,6 +351,7 @@ docker logs --tail 50 crescit-proxy
 - [Auth0 React SDK e configuração de login](https://auth0.com/docs/quickstart/spa/react).
 - [Auth0: roles em tokens usando Actions](https://support.auth0.com/center/s/article/add-roles-and-permissions-to-the-id-token-using-actions).
 - [Auth0: atribuir roles a usuários](https://auth0.com/docs/manage-users/access-control/configure-core-rbac/rbac-users/assign-roles-to-users).
+- [Auth0: políticas de acesso das aplicações à API](https://auth0.com/docs/get-started/apis/api-access-policies-for-applications).
 - [Spring Security: resource server JWT e validação de audience](https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html).
 - [Vite na Vercel](https://vercel.com/docs/frameworks/frontend/vite).
 - [Vercel: gerenciamento de variáveis e redeploy](https://vercel.com/docs/environment-variables/managing-environment-variables).
