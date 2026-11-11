@@ -28,4 +28,8 @@ public class AvaliacaoController {
     public Avaliacao criar(@Valid @RequestBody CriarAvaliacaoRequest request, @AuthenticationPrincipal Jwt jwt) {
         return service.criar(request, jwt.getClaimAsString(namespace + "/email"));
     }
+    @DeleteMapping("/{id}")
+    public void deletar(@PathVariable Long id) {
+        service.deletar(id);
+    }
 }

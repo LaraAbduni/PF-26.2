@@ -27,6 +27,7 @@ public class Avaliacao {
         this.comentarios = comentarios;
         this.nota = nota;
         this.dataAvaliacao = Instant.now();
+        private boolean deleted = false;
     }
     public Long getId() { return id; }
     public String getEmailAvaliador() { return emailAvaliador; }
@@ -34,4 +35,6 @@ public class Avaliacao {
     public String getComentarios() { return comentarios; }
     public BigDecimal getNota() { return nota; }
     public Instant getDataAvaliacao() { return dataAvaliacao; }
+    
+    
 }
