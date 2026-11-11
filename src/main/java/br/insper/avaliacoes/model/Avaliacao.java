@@ -19,6 +19,8 @@ public class Avaliacao {
     private BigDecimal nota;
     @Column(nullable = false)
     private Instant dataAvaliacao;
+    @Column(nullable = false)
+    private boolean deleted = false;
 
     protected Avaliacao() {}
     public Avaliacao(String emailAvaliador, String emailAvaliado, String comentarios, BigDecimal nota) {
@@ -27,7 +29,7 @@ public class Avaliacao {
         this.comentarios = comentarios;
         this.nota = nota;
         this.dataAvaliacao = Instant.now();
-        private boolean deleted = false;
+    
     }
     public Long getId() { return id; }
     public String getEmailAvaliador() { return emailAvaliador; }
